@@ -125,16 +125,13 @@ pub fn run(opt: cli::CLI) -> Result<()> {
             .encode(&rgb8_img, &msg)
             .context("failed to encode message to image")?;
 
-        match opt.output {
-            Some(path) => {
-                res.save(path.clone())
-                    .context(format!("saving image to {:?}", path))?;
-            }
-            None => {
-                let mut out = std::io::stdout();
-                out.write_all(res.as_raw())?;
-                out.flush()?;
-            }
+        if let Some(path) = opt.output {
+            res.save(path.clone())
+                .context(format!("saving image to {:?}", path))?;
+        } else {
+            let mut out = std::io::stdout();
+            out.write_all(res.as_raw())?;
+            out.flush()?;
         }
 
     }

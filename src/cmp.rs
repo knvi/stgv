@@ -5,7 +5,7 @@ use crate::StegError;
 /// Compresses a slice of bytes into a new vec of bytes.
 pub fn compress(data: &[u8]) -> Result<Vec<u8>, StegError> {
     data.iter()
-        .cloned()
+        .copied()
         .encode(&mut BZip2Encoder::new(9), Action::Finish)
         .collect::<Result<Vec<_>, _>>()
         .map_err(StegError::Compression)
@@ -14,7 +14,7 @@ pub fn compress(data: &[u8]) -> Result<Vec<u8>, StegError> {
 /// Decompresses a slice of bytes into a new vec of bytes.
 pub fn decompress(data: &[u8]) -> Result<Vec<u8>, StegError> {
     data.iter()
-        .cloned()
+        .copied()
         .decode(&mut BZip2Decoder::new())
         .collect::<Result<Vec<_>, _>>()
         .map_err(StegError::Decompression)

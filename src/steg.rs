@@ -71,7 +71,7 @@ impl Steganography for BitEncoder {
         let linspace_length = (binary_msg.len() as f64 / 3.).ceil() as usize;
         let linear_pixel_dist = get_linspace(
             0.,
-            ((img.width() * img.height()) - 1) as f64,
+            f64::from((img.width() * img.height()) - 1),
             linspace_length,
         );
         let mut linear_pixel_dist = linear_pixel_dist.iter();
@@ -133,7 +133,7 @@ impl Steganography for BitEncoder {
             }
             BitDistribution::Linear { length } => {
                 let linear_pixel_dist =
-                    get_linspace(0., ((img.width() * img.height()) - 1) as f64, length);
+                    get_linspace(0., f64::from((img.width() * img.height()) - 1), length);
                 'outer_lin: for pixel_num in linear_pixel_dist {
                     let x = pixel_num as u32 % img.width();
                     let y = pixel_num as u32 / img.width();
@@ -162,8 +162,7 @@ impl Steganography for BitEncoder {
                 &chrs
                     .iter()
                     .map(|c| format! {"{}",c})
-                    .collect::<Vec<String>>()
-                    .join(""),
+                    .collect::<String>(),
                 2,
             )
             .map_err(|e| StegError::Decoding(format!("reconstructing byte: {}", e)))?;

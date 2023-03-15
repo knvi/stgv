@@ -1,3 +1,5 @@
+#![warn(clippy::all, clippy::pedantic, clippy::nursery)]
+
 use stgv::{cli, exec};
 use structopt::StructOpt;
 

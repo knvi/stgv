@@ -1,3 +1,5 @@
+#![warn(clippy::all, clippy::pedantic, clippy::nursery)]
+
 pub mod steg;
 pub mod bit;
 pub mod cmp;
@@ -6,7 +8,7 @@ pub mod exec;
 
 use thiserror::Error;
 
-#[derive(Error, Debug, PartialEq)]
+#[derive(Error, Debug, Eq, PartialEq)]
 pub enum StegError {
     #[error("Encoded message not found in data")]
     EncodingNotFound,

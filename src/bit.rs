@@ -38,7 +38,7 @@ impl FromStr for BitDistribution {
 
 impl Default for BitDistribution {
     fn default() -> Self {
-        BitDistribution::Sequential
+        Self::Sequential
     }
 }
 
@@ -54,10 +54,10 @@ enum BitMask {
 impl From<u8> for BitMask {
     fn from(n: u8) -> Self {
         match n {
-            1 => BitMask::One,
-            2 => BitMask::Two,
-            4 => BitMask::Four,
-            8 => BitMask::Eight,
+            1 => Self::One,
+            2 => Self::Two,
+            4 => Self::Four,
+            8 => Self::Eight,
             other => panic!("cannot create bitmask from val {other}"),
         }
     }
@@ -71,7 +71,7 @@ pub trait BitEncode {
     fn decode(&mut self, color_val: &u8) -> u8;
 }
 
-/// Implementation of BitEncode
+/// Implementation of `BitEncode`
 pub struct BitEncoder {
     pub encoder: Box<dyn BitEncode>,
     /// Bit distribution method
@@ -82,7 +82,7 @@ pub struct BitEncoder {
 
 impl BitEncoder {
     pub fn new(encoder: Box<dyn BitEncode>, bd: Option<BitDistribution>) -> Self {
-        BitEncoder {
+        Self {
             encoder,
             bit_dist: bd.unwrap_or_default(),
             end_seq: true,
@@ -124,7 +124,7 @@ pub struct Rsb {
 
 impl Rsb {
     pub fn new(max: u8, seed: &str) -> Self {
-        Rsb {
+        Self {
             max,
             rng: Seeder::from(seed).make_rng(),
         }
